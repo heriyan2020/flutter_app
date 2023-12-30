@@ -43,7 +43,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
       final model = RegisterRequestModel(
           email: _emailController.text,
           password: _passwordController.text,
-          username: _firstNameController.text);
+          name: _firstNameController.text);
       context.read<RegisterBloc>().add(RegisterEvent.register(model));
       isEmailVerified = true;
     } else {
@@ -134,7 +134,36 @@ class SignUpWidgetState extends State<SignUpWidget> {
               right: Dimensions.marginSizeLarge,
               bottom: Dimensions.marginSizeLarge,
               top: Dimensions.marginSizeLarge),
-          child: CustomButton(onTap: addUser, buttonText: 'Sign Up'),
+          child: BlocListener<RegisterBloc, RegisterState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                orElse: () {},
+                error: (message) {
+                  return ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(message)),
+                  );
+                },
+                loaded: (data) {
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) {
+                    return const DashboardPage();
+                  }), (route) => false);
+                },
+              );
+            },
+            child: BlocBuilder<RegisterBloc, RegisterState>(
+              builder: (context, state) {
+                return state.maybeWhen(
+                  orElse: () {
+                    return CustomButton(onTap: addUser, buttonText: 'Sign Up');
+                  },
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
         Center(
             child: Row(

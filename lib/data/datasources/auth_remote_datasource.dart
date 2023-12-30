@@ -4,7 +4,7 @@ import 'package:flutter_app/data/models/request/register_request_mode.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 
-class AuthRemoteDataSource {
+class AuthRemoteDatasource {
   Future<Either<String, AuthResponseModel>> register(
       RegisterRequestModel model) async {
     final headers = {
@@ -16,10 +16,10 @@ class AuthRemoteDataSource {
         headers: headers,
         body: model.toJson());
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return Right(AuthResponseModel.fromJson(response.body));
     } else {
-      return const Left('Server Error');
+      return const Left('Server error');
     }
   }
 }

@@ -9,11 +9,11 @@ class RegisterRequestModel {
 
   final String email;
   final String password;
-  final String username;
+  final String name;
   RegisterRequestModel({
     required this.email,
     required this.password,
-    required this.username,
+    required this.name,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,7 +21,7 @@ class RegisterRequestModel {
 
     result.addAll({'email': email});
     result.addAll({'password': password});
-    result.addAll({'username': username});
+    result.addAll({'name': name});
 
     return result;
   }
@@ -30,7 +30,7 @@ class RegisterRequestModel {
     return RegisterRequestModel(
       email: map['email'] ?? '',
       password: map['password'] ?? '',
-      username: map['username'] ?? '',
+      name: map['name'] ?? '',
     );
   }
 
