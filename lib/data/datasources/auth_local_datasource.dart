@@ -14,4 +14,10 @@ class AuthLocalDatasource {
     final authModel = AuthResponseModel.fromJson(authJson);
     return authModel.jwtToken;
   }
+
+  Future<bool> isLogin() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final authJson = pref.getString('auth') ?? '';
+    return authJson.isNotEmpty;
+  }
 }
