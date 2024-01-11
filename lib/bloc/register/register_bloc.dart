@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_app/data/datasources/auth_remote_datasource.dart';
 import 'package:flutter_app/data/models/auth_response_model.dart';
-import 'package:flutter_app/data/models/request/register_request_mode.dart';
+import 'package:flutter_app/data/models/request/register_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'register_event.dart';

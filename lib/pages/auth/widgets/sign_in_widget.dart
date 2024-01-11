@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bloc/login/login_bloc.dart';
+import 'package:flutter_app/data/datasources/auth_local_datasource.dart';
+import 'package:flutter_app/data/models/request/login_request_model.dart';
 import 'package:flutter_app/pages/dashboard/dashboard_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../utils/color_resources.dart';
 import '../../../utils/custom_themes.dart';
@@ -55,7 +59,10 @@ class SignInWidgetState extends State<SignInWidget> {
           content: Text('Password'),
           backgroundColor: Colors.red,
         ));
-      } else {}
+      } else {
+        final model = LoginRequestModel(email: email, password: password);
+        context.read<LoginBloc>().add(LoginEvent.login(model));
+      }
     }
   }
 
@@ -117,7 +124,36 @@ class SignInWidgetState extends State<SignInWidget> {
             Container(
               margin: const EdgeInsets.only(
                   left: 20, right: 20, bottom: 20, top: 30),
-              child: CustomButton(onTap: loginUser, buttonText: 'Sign In'),
+              child: BlocConsumer<LoginBloc, LoginState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                      orElse: () {},
+                      loaded: (data) async {
+                        await AuthLocalDatasource().saveAuthData(data);
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DashboardPage();
+                        }), (route) => false);
+                      },
+                      error: (message) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(message),
+                          backgroundColor: Colors.red,
+                        ));
+                      });
+                },
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: () {
+                      return CustomButton(
+                          onTap: loginUser, buttonText: 'Sign In');
+                    },
+                    loading: () => Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(width: Dimensions.paddingSizeDefault),
             const SizedBox(width: Dimensions.paddingSizeDefault),
