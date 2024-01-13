@@ -29,6 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.2
+  build_runner: ^2.4.8
+  carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
   flutter:
@@ -38,7 +40,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   http: ^1.1.2
   shared_preferences: ^2.2.2
-  build_runner: ^2.4.8
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_lints: ^3.0.1

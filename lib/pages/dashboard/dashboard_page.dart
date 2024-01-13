@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_app/bloc/logout/logout_bloc.dart';
 import 'package:flutter_app/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_app/pages/auth/auth_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_app/pages/home/home_page.dart';
 
 import '../../utils/images.dart';
 
@@ -34,13 +36,7 @@ class _HomePageState extends State<DashboardPage> {
     });
 
     _screens = [
-      const Center(
-        child: Column(
-          children: [
-            Text('Home'),
-          ],
-        ),
-      ),
+      const HomePage(),
       const Center(
         child: Text('Order'),
       ),

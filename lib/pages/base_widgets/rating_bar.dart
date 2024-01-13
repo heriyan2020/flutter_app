@@ -4,7 +4,8 @@ class RatingBar extends StatelessWidget {
   final double rating;
   final double size;
 
-  const RatingBar({Key? key, required this.rating, this.size = 18}) : super(key: key);
+  const RatingBar({Key? key, required this.rating, this.size = 18})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,8 @@ class RatingBar extends StatelessWidget {
               Icon(Icons.star, color: Colors.orange, size: size),
               ClipRect(
                 clipper: _Clipper(part: partNumber),
-                child: Icon(Icons.star_border, color: Colors.orange, size: size),
+                child:
+                    Icon(Icons.star_border, color: Colors.orange, size: size),
               )
             ],
           ),
